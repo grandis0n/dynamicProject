@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+    Удаление поста
+{% endblock %}
+
+{% block content %}
+    <div style="margin-top: 50px;" class="container text-center bg-white shadow">
+        <div style="padding: 20px;" class="features">
+            <h1 class="mb-4">Удаление поста</h1>
+            <form method="post">
+                {% csrf_token %}
+                <p>Вы уверены, что хотите удалить этот пост?</p>
+                <button style="background-color: #dc3545; border-color: #dc3545;" class="btn btn-danger" type="submit">
+                    Удалить пост
+                </button>
+                <a style="margin-left: 10px; background-color: #6c757d; border-color: #6c757d;"
+                   href="{% url 'post-details' post.id %}" class="btn btn-secondary">Отмена</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

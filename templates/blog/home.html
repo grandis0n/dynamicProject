@@ -1,10 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "blog/base.html" %}
 
-</body>
-</html>
+{% load static %}
+
+{% block title %}
+    Новости на сайте
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="btn-group mb-3">
+            <a href="?sort=created_at{% if query %}&q={{ query }}{% endif %}" class="btn btn-outline-primary">Сортировать
+                по дате</a>
+            <a href="?sort=title{% if query %}&q={{ query }}{% endif %}" class="btn btn-outline-primary">Сортировать по
+                названию</a>
+        </div>
+
+        <style>
+            .card-img-top {
+                object-fit: cover;
+                height: 200px;
+                width: 100%;
+            }
+        </style>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for el in posts %}
+                <div class="col-md-3">
+                    <div class="card shadow">
+                        <img src="{{ el.main_image.url }}" alt="{{ post.title }}" class="card-img-top img-fluid">
+                        <div class="card-body d-flex flex-column">
+                            <h3 class="card-title">{{ el.title }}</h3>
+                            <h5>{{ el.author }}</h5>
+                            <h6>{{ el.created_at }}</h6>
+                            <p class="card-text">{{ el.brief_description }}</p>
+                            <a href="{% url 'post-details' el.id %}" class="btn btn-primary mt-auto">Читать больше</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var maxHeight = 0;
+            $('.card-body').each(function () {
+                if ($(this).height() > maxHeight) {
+                    maxHeight = $(this).height();
+                }
+            });
+
+            $('.card-body').height(maxHeight);
+        });
+    </script>
+{% endblock %}

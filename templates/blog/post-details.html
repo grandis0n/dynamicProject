@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %}
+
+{% load static %}
+
+{% block title %}
+    {{ post.title }}
+{% endblock %}
+
+{% block content %}
+    <div class="container text-center bg-white shadow">
+        <div class="features" style="margin-bottom: 20px; margin-top: 20px">
+            <h1>{{ post.title }}</h1>
+            <p>{{ post.created_at }}</p>
+            <p>{{ post.content }}</p>
+            <img src="{{ post.main_image.url }}" alt="{{ post.title }}" style="width: 100%;">
+        </div>
+    </div>
+    <div class="container text-center" style="margin-bottom: 20px;">
+        <a href="{% url 'post-delete' post.id %}" class="btn btn-danger">Удалить</a>
+        <a href="{% url 'post-update' post.id %}" class="btn btn-info">Редактировать</a>
+    </div>
+{% endblock %}
