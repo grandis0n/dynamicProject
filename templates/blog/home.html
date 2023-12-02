@@ -30,7 +30,7 @@
                         <img src="{{ el.main_image.url }}" alt="{{ post.title }}" class="card-img-top img-fluid">
                         <div class="card-body d-flex flex-column">
                             <h3 class="card-title">{{ el.title }}</h3>
-                            <h5>{{ el.author }}</h5>
+{#                            <h5>{{ el.author }}</h5>#}
                             <h6>{{ el.created_at }}</h6>
                             <p class="card-text">{{ el.brief_description }}</p>
                             <a href="{% url 'post-details' el.id %}" class="btn btn-primary mt-auto">Читать больше</a>

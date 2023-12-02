@@ -1,6 +1,8 @@
-from django.db.models import Q
-from django.db.models.functions import Lower
+import os
+
+import requests
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, UpdateView, ListView
 from .forms import PostForm
 from .models import Post
@@ -24,7 +26,6 @@ def home_page(request):
     return render(request, 'blog/home.html', context)
 
 
-# Create your views here.
 def create(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
@@ -53,5 +54,15 @@ class PostUpdateView(UpdateView):
 
 class PostDeleteView(DeleteView):
     model = Post
-    success_url = '/'
+    success_url = reverse_lazy('home')
     template_name = 'blog/post-delete.html'
+
+    def form_valid(self, form):
+        post = self.get_object()
+
+        image_path = post.main_image.path
+
+        if os.path.exists(image_path):
+            os.remove(image_path)
+
+        return super().form_valid(form)
